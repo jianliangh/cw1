@@ -1,0 +1,102 @@
+body {
+	background-color: #E3AC6D;
+	margin: 0px;
+}
+
+h1, h2 {
+	margin: 0px
+}
+
+h2 {
+	text-decoration: underline;
+}
+
+header, footer {
+	background-color: #6F4E37;
+	color: white;
+	margin: 0px;
+	padding: 10px;
+	text-align: center;
+}
+
+#display {
+	background-color: #FEF8D0;
+	margin-bottom: 20px;
+	display: flex;
+}
+
+#menu {
+	text-align: center;
+	flex: 0.2;
+	padding: 5px;
+}
+
+#content {
+	flex: 1;
+	padding: 5px;
+}
+
+#menu a {
+	background-color: #fdf4b7;
+	color: black;
+	display: block;
+	padding: 12px;
+	text-decoration: none;
+}
+
+#menu a:hover {
+	background-color: #fcf09e;
+}
+
+#menu a.active {
+	background-color: #fcec85;
+	font-weight: bolder;
+}
+
+#menu {
+	width: 20%;
+}
+
+#content {
+	width: 75%;
+}
+
+.board {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.buttons {
+  background-color: #fdf4b7;
+  padding: 20px;
+  text-align: center;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.but{
+  padding: 20px;
+  text-align: center;
+  margin-right: 20px;
+  background-color: #fdf4b7;
+}
+
+.buttons:hover {
+  background-color: #fcf09e;
+}
+
+.buttons a {
+	color: #FFFFFF;
+	padding: 10px 40px;
+	border-radius: 5px;
+	text-decoration: none;
+	background-color: #007bff;
+}
+
+
+/* top up page for your card balance */
+#balance {
+	font-weight: bolder;
+	
+}

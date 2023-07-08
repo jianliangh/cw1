@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<body>
+	<div th:fragment="links">
+		<meta charset="ISO-8859-1">
+		<title th:text="${title}"></title>
+
+		<link rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css">
+		<link href="../styles.css" rel="stylesheet">
+
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../main.js"></script>
+	</div>
+
+	<!-- Header -->
+	<header th:fragment="header">
+		<h1>ABC Cafe Online Kiosk</h1>
+	</header>
+
+	<!--  Nav Bar -->
+	<div id="menu" th:fragment="nav">
+		<a href="/" th:class=${home} sec:authorize="!isAuthenticated()">Home
+			Page</a> <a href="/account" th:class=${account}
+			sec:authorize="!isAuthenticated()">Create Account</a> <a
+			href="/login" th:class=${login} sec:authorize="!isAuthenticated()">Login
+			Page</a> <a href="/dashboard" th:class=${dashboard}
+			sec:authorize="isAuthenticated()">Dashboard</a> <a
+			href="/user/password" th:class=${password}
+			sec:authorize="isAuthenticated()"> Change Password</a>
+
+		<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
+			method="post">
+			<a th:class="dropdown-item"> <input id="logout" type="submit"
+					value="Logout"
+					style="border-style: none; background-color: transparent;" />
+			</a>
+		</form>
+		
+		<b sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name">Username</span></b>
+		<br>
+		<span sec:authorize="isAuthenticated()" th:text="${session.today}"></span>
+
+	</div>
+
+	<!--  Home Page-->
+	<div id="content" th:fragment="home">
+		<h2>Welcome to ABC Cafe Online Kiosk.</h2>
+		<p>Please login to Online Kiosk system to perform your card
+			transactions.</p>
+	</div>
+
+	<!-- Account Creation -->
+	<div id="content" th:fragment="account">
+
+		<form th:action="@{/user/save}" th:object="${Users}" method="post"
+			enctype="multipart/form-data">
+
+			<th:block th:each="roles : ${roles}">
+				<!--  <input type="hidden" name="roles" th:if="${roles.id} == 1" th:field="${roles.id}" required /> -->
+
+				<input type="hidden" name="roles" th:if="${roles.id} == 1"
+					th:value="${roles.id}" />
+				<!-- <p th:if="${roles.id} == 1" th:text="${roles.id} + ' : ' + ${roles.name}"></p>  -->
+
+			</th:block>
+
+			<h2>ABC Cafe Online Kiosk Account Creation</h2>
+			<p>Please key in your username and password to create ABC Cafe
+				account.</p>
+
+			<div class="form-group row">
+				<label for="username" class="col-sm-2 col-form-label">Username:
+				</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{username}" class="form-control"
+						required />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="password" class="col-sm-2 col-form-label">Password:
+				</label>
+				<div class="col-sm-10">
+					<input type="password" th:field="*{password}" size="25"
+						class="form-control" required />
+				</div>
+			</div>
+
+			<!-- Submit Button -->
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"> </label>
+				<div class="col-sm-10">
+					<input type="submit" value="Create"
+						class="btn btn-primary form-control">
+				</div>
+			</div>
+			<!-- Feedback Message -->
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"> </label>
+				<div class="col-sm-10">
+					<label th:text="${message}"></label>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<!-- Change Password -->
+	<div id="content" th:fragment="password">
+
+		<form th:action="@{/user/passwordchange}" method="post">
+
+			<h2>Change Password</h2>
+			<p>Please key in your new password to change your account password.</p>
+
+			<div class="form-group row">
+				<label for="password" class="col-sm-2 col-form-label">New Password:
+				</label>
+				<div class="col-sm-10">
+					<input type="password" name="password" size="25"
+						class="form-control" required />
+				</div>
+			</div>
+
+			<!-- Submit Button -->
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"> </label>
+				<div class="col-sm-10">
+					<input type="submit" value="Change"
+						class="btn btn-primary form-control">
+				</div>
+			</div>
+			<!-- Feedback Message -->
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"> </label>
+				<div class="col-sm-10">
+					<label th:text="${message}"></label>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Login Page-->
+	<div id="content" th:fragment="login">
+		<form class="form-signin" th:action="@{/login}" method="post">
+			<h2 class="form-signin-heading">Login to ABC Cafe Online Kiosk.</h2>
+			<p>Please login to Online Kiosk system.</p>
+			<p>
+				<label for="username" class="sr-only">Username</label> <input
+					type="text" id="username" name="username" class="form-control"
+					placeholder="Username" required="" autofocus="">
+			</p>
+			<p>
+				<label for="password" class="sr-only">Password</label> <input
+					type="password" id="password" name="password" class="form-control"
+					placeholder="Password" required="">
+			</p>
+			<input name="_csrf" type="hidden"
+				value="1eddb30b-6263-4eed-93a3-135f9be0a899">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+		</form>
+		<div th:if="${param.error}">Invalid username and password.</div>
+		<div th:if="${param.logout}">You have been logged out.</div>
+	</div>
+
+
+	<!--  Dashboard -->
+	<div id="content" th:fragment="dashboard">
+		<h2>Dashboard</h2>
+		<p>Please choose options below to proceed next step.</p>
+
+		<p th:if="${exist} == 1" id="balance" th:text="${balance}"></p>
+		
+		<div class="board">
+			<div class="buttons">
+				<h3>Bank Card</h3> <br><a href="card/link">Link</a>  <a
+					href="card/view">View</a>
+			</div>
+			<div class="buttons">
+				<h3>Transactions</h3>  <br> <a href="transaction/topup">Topup</a>  <a
+					href="transaction/view">View</a>
+			</div>
+		</div>
+
+	</div>
+
+	<!--  Link Bank Card Page-->
+	<div id="content" th:fragment="cardlink">
+		<h2>Link Bank Card</h2>
+		<p th:if="${exist} == 0">Please enter the bank card detail below
+			and click on link button</p>
+		
+		<p th:if="${exist} == 1">
+			You have linked your bank card. Please click this <a
+				href="/card/view"> link </a> to view your linked bank card.
+		</p>
+		
+		<form th:action="@{/card/save}" th:object="${Card}" method="post"
+			th:if="${exist} == 0" id="linkbankcardform">
+
+			<input type="hidden" name="userid" th:value="${userid}" />
+
+			<div class="form-group row">
+				<label for="number" class="col-sm-2 col-form-label"> Bank
+					Number: </label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" maxlength="16"
+						id="banknumber" th:field="*{cardnumber}" required />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="name" class="col-sm-2 col-form-label">Name: </label>
+				<div class="col-sm-10">
+					<input type="text" size="25" class="form-control" required
+						th:field="*{cardname}" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="valid" class="col-sm-2 col-form-label">Valid
+					Until: </label>
+				<div class="col-sm-10">
+					<input type="month" class="form-control" required
+						th:field="*{validuntil}" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="cvv" class="col-sm-2 col-form-label">CVV: </label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="cvv" required
+						th:field="*{cvv}" />
+				</div>
+			</div>
+
+			<!-- Submit Button -->
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"> </label>
+				<div class="col-sm-10">
+					<input type="submit" value="Link"
+						class="btn btn-primary form-control">
+				</div>
+			</div>
+			<!-- Feedback Message -->
+			<div class="form-group row">
+				<label for="" class="col-sm-2 col-form-label"> </label>
+				<div class="col-sm-10">
+					<label th:text="${message}"></label>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!--  View Bank Card Page-->
+	<div id="content" th:fragment="cardview">
+		<h2>View Bank Card</h2>
+		<p th:if="${exist} == 0">
+			You have not linked your bank card yet. Please click this <a
+				href="/card/link"> link </a> to proceed linked your bank card.
+		</p>
+
+		<p th:if="${exist} == 1">Here is your linked bank card detail.</p>
+
+		<div th:if="${exist} == 1">
+			<table class="table table-success table-striped-columns">
+				<thead>
+					<tr>
+						<th>Card Number</th>
+						<th>Name</th>
+						<th>Valid Until</th>
+						<th>CVV</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${card.cardnumber}" />
+						<td th:text="${card.cardname}" />
+						<td th:text="${card.validuntil}" />
+						<td th:text="${card.cvv}" />
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--  Top Up Transaction Page-->
+	<div id="content" th:fragment="trantopup">
+		<h2>Topup Transactions</h2>
+
+		<p th:if="${exist} == 0">
+			You have not linked your bank card yet. Please click this <a
+				href="/card/link"> link </a> to proceed linked your bank card.
+		</p>
+
+		<p th:if="${exist} == 1">Please click these options below to top
+			up your card balance.</p>
+
+		<p th:if="${exist} == 1" id="balance" th:text="${balance}"></p>
+
+		<div class="board" th:if="${exist} == 1">
+
+			<div class="buttons">
+				<form th:action="@{/transaction/add}" method="post"
+					th:if="${exist} == 1">
+
+					<input type="hidden" name="userid" th:value="${userid}" /> <input
+						type="hidden" name="balance" value="5" />
+
+					<!-- Submit Button -->
+
+					<input type="submit" value="$5"
+						class="btn btn-primary form-control">
+				</form>
+			</div>
+			<div class="buttons">
+				<form th:action="@{/transaction/add}" method="post"
+					th:if="${exist} == 1">
+
+					<input type="hidden" name="userid" th:value="${userid}" /> <input
+						type="hidden" name="balance" value="10" />
+
+					<!-- Submit Button -->
+					<input type="submit" value="$10"
+						class="btn btn-primary form-control">
+				</form>
+			</div>
+			<div th:text="${message}"></div>
+
+		</div>
+
+
+	</div>
+
+
+	<!-- Table Transaction View -->
+	<div id="content" th:fragment="tranview">
+		<h2>View Transactions</h2>
+
+		<p th:if="${exist} == 0">
+			You have not linked your bank card yet. Please click this <a
+				href="/card/link"> link </a> to proceed linked your bank card.
+		</p>
+
+		<p th:if="${exist} == 1">Please click these options below to sort
+			your transaction rows.</p>
+
+		<p th:if="${exist} == 1" id="balance" th:text="${balance}"></p>
+
+		<div class="board">
+			<div class="but" th:if="${exist} == 1">
+
+				<form th:action="@{/transaction/sort}" method="post">
+
+					<input type="hidden" name="userid" th:value="${userid}" /> <input
+						type="hidden" name="sort" value="Ascending" />
+
+					<!-- Submit Button -->
+
+					<input type="submit" value="Ascending"
+						class="btn btn-primary form-control">
+				</form>
+			</div>
+			<div class="but" th:if="${exist} == 1">
+				<form th:action="@{/transaction/sort}" method="post">
+
+					<input type="hidden" name="userid" th:value="${userid}" /> <input
+						type="hidden" name="sort" value="Descending" />
+
+					<!-- Submit Button -->
+					<input type="submit" value="Descending"
+						class="btn btn-primary form-control">
+				</form>
+			</div>
+		</div>
+
+		<div th:if="${exist} == 1">
+			<table class="table table-success table-striped-columns">
+				<thead>
+					<tr>
+						<th>Tranid</th>
+						<th>Date</th>
+						<th>Time</th>
+						<th>Type</th>
+						<th>Balance</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="tran:${transactions}">
+						<td th:text="${tran.tranid}" />
+						<td th:text="${tran.date}" />
+						<td th:text="${tran.timing}" />
+						<td th:text="${tran.type}" />
+						<td th:text="'$' + ${tran.balance}" />
+				</tbody>
+			</table>
+		</div>
+		
+		<div th:text="${message}"></div>
+	</div>
+
+
+	<!-- ERROR -->
+	<div th:fragment="error">
+		<div class="boxView">
+			<h1>Something went wrong!</h1>
+			<hr>
+			<p>Please try other webpages.</p>
+
+		</div>
+	</div>
+
+
+	<!-- Footer -->
+	<footer class="footer mt-auto py-3" th:fragment="footer">
+		<div class="container">
+			<span> &copy; 2023 ABC Cafe. </span>
+		</div>
+	</footer>
+
+</body>
+
+</html>
