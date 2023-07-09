@@ -106,6 +106,9 @@ public class AccountController {
 
 		// set home tab in active and set "ABC Cafe" in web page title
 		page(model, "home", "ABC Cafe Online Kiosk");
+		
+		// set the total transaction times
+		model.addAttribute("tran", tr.count());
 
 		// return templates/Index.html
 		return "Index";
