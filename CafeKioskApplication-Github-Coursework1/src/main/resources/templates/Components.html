@@ -350,7 +350,7 @@
 				href="/card/link"> link </a> to proceed linked your bank card.
 		</p>
 
-		<p th:if="${exist} == 1">Please click these options below to sort
+		<p th:if="${exist} == 1">Please click this option below to sort
 			your transaction rows.</p>
 
 		<p th:if="${exist} == 1" id="balance" th:text="${balance}"></p>
@@ -361,22 +361,11 @@
 				<form th:action="@{/transaction/sort}" method="post">
 
 					<input type="hidden" name="userid" th:value="${userid}" /> <input
-						type="hidden" name="sort" value="Ascending" />
+						type="hidden" name="sort" th:value="${sortbuttonrevert}" />
 
 					<!-- Submit Button -->
 
-					<input type="submit" value="Ascending"
-						class="btn btn-primary form-control">
-				</form>
-			</div>
-			<div class="but" th:if="${exist} == 1">
-				<form th:action="@{/transaction/sort}" method="post">
-
-					<input type="hidden" name="userid" th:value="${userid}" /> <input
-						type="hidden" name="sort" value="Descending" />
-
-					<!-- Submit Button -->
-					<input type="submit" value="Descending"
+					<input type="submit" th:value="${sortbutton}"
 						class="btn btn-primary form-control">
 				</form>
 			</div>
