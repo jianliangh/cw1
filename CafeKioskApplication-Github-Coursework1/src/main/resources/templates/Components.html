@@ -40,14 +40,14 @@
 		<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
 			method="post">
 			<a th:class="dropdown-item"> <input id="logout" type="submit"
-					value="Logout"
-					style="border-style: none; background-color: transparent;" />
+				value="Logout"
+				style="border-style: none; background-color: transparent;" />
 			</a>
 		</form>
-		
-		<b sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name">Username</span></b>
-		<br>
-		<span sec:authorize="isAuthenticated()" th:text="${session.today}"></span>
+
+		<b sec:authorize="isAuthenticated()">Welcome <span
+			sec:authentication="name">Username</span></b> <br> <span
+			sec:authorize="isAuthenticated()" th:text="${session.today}"></span>
 
 	</div>
 
@@ -112,18 +112,19 @@
 			</div>
 		</form>
 	</div>
-	
+
 	<!-- Change Password -->
 	<div id="content" th:fragment="password">
 
 		<form th:action="@{/user/passwordchange}" method="post">
 
 			<h2>Change Password</h2>
-			<p>Please key in your new password to change your account password.</p>
+			<p>Please key in your new password to change your account
+				password.</p>
 
 			<div class="form-group row">
-				<label for="password" class="col-sm-2 col-form-label">New Password:
-				</label>
+				<label for="password" class="col-sm-2 col-form-label">New
+					Password: </label>
 				<div class="col-sm-10">
 					<input type="password" name="password" size="25"
 						class="form-control" required />
@@ -178,14 +179,15 @@
 		<p>Please choose options below to proceed next step.</p>
 
 		<p th:if="${exist} == 1" id="balance" th:text="${balance}"></p>
-		
+
 		<div class="board">
 			<div class="buttons">
-				<h3>Bank Card</h3> <br><a href="card/link">Link</a>  <a
-					href="card/view">View</a>
+				<h3>Bank Card</h3>
+				<br> <a href="card/link">Link</a> <a href="card/view">View</a>
 			</div>
 			<div class="buttons">
-				<h3>Transactions</h3>  <br> <a href="transaction/topup">Topup</a>  <a
+				<h3>Transactions</h3>
+				<br> <a href="transaction/topup">Topup</a> <a
 					href="transaction/view">View</a>
 			</div>
 		</div>
@@ -197,12 +199,12 @@
 		<h2>Link Bank Card</h2>
 		<p th:if="${exist} == 0">Please enter the bank card detail below
 			and click on link button</p>
-		
+
 		<p th:if="${exist} == 1">
 			You have linked your bank card. Please click this <a
 				href="/card/view"> link </a> to view your linked bank card.
 		</p>
-		
+
 		<form th:action="@{/card/save}" th:object="${Card}" method="post"
 			th:if="${exist} == 0" id="linkbankcardform">
 
@@ -271,27 +273,16 @@
 		<p th:if="${exist} == 1">Here is your linked bank card detail.</p>
 
 		<div th:if="${exist} == 1">
-			<table class="table table-success table-striped-columns">
-				<thead>
-					<tr>
-						<th>Card Number</th>
-						<th>Name</th>
-						<th>Valid Until</th>
-						<th>CVV</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td th:text="${card.cardnumber}" />
-						<td th:text="${card.cardname}" />
-						<td th:text="${card.validuntil}" />
-						<td th:text="${card.cvv}" />
-					</tr>
-				</tbody>
-			</table>
+
+			<div id="cardui">
+				<h3> BANK </h3>
+				<h4 th:text="${card.cardname}"></h4>
+				<h4 th:text="${card.cardnumber}"></h4>
+				<h5 th:text=" ${card.validuntil} + ' | ' + ${card.cvv}"></h5>
+				
+			</div>
 		</div>
 	</div>
-
 	<!--  Top Up Transaction Page-->
 	<div id="content" th:fragment="trantopup">
 		<h2>Topup Transactions</h2>
@@ -403,7 +394,7 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 		<div th:text="${message}"></div>
 	</div>
 
@@ -425,7 +416,6 @@
 			<span> &copy; 2023 ABC Cafe. </span>
 		</div>
 	</footer>
-
 </body>
 
 </html>

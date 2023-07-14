@@ -62,28 +62,28 @@ header, footer {
 }
 
 .board {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
 }
 
 .buttons {
-  background-color: #fdf4b7;
-  padding: 20px;
-  text-align: center;
-  margin-right: 20px;
-  margin-bottom: 20px;
+	background-color: #fdf4b7;
+	padding: 20px;
+	text-align: center;
+	margin-right: 20px;
+	margin-bottom: 20px;
 }
 
-.but{
-  padding: 20px;
-  text-align: center;
-  margin-right: 20px;
-  background-color: #fdf4b7;
+.but {
+	padding: 20px;
+	text-align: center;
+	margin-right: 20px;
+	background-color: #fdf4b7;
 }
 
 .buttons:hover {
-  background-color: #fcf09e;
+	background-color: #fcf09e;
 }
 
 .buttons a {
@@ -94,9 +94,23 @@ header, footer {
 	background-color: #007bff;
 }
 
-
 /* top up page for your card balance */
 #balance {
 	font-weight: bolder;
-	
+}
+
+#cardui {
+	border-radius: 5px;
+	background-color: #007bff;
+	width: 30%;
+	padding: 10px;
+	color: white;
+}
+
+#cardui h3 {
+	text-align: right;
+}
+
+#cardui h4,  #cardui h5{
+	text-align: center;
 }
