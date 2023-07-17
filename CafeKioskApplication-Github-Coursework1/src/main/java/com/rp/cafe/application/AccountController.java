@@ -450,6 +450,10 @@ public class AccountController {
 
 		// place transaction table in ascending order
 		model.addAttribute("transactions", tr.sortASCbyUserID(Long.parseLong(session.getAttribute("id").toString())));
+		
+		// set button text
+		model.addAttribute("sortbutton", "Ascending Order");
+		model.addAttribute("sortbuttonrevert", "Descending");
 
 		// set home tab in active and set "ABC Cafe" in web page title
 		page(model, "", "ABC Cafe Online Kiosk View Transaction");
@@ -476,11 +480,17 @@ public class AccountController {
 			// place transaction table in ascending order
 			model.addAttribute("transactions",
 					tr.sortASCbyUserID(Long.parseLong(session.getAttribute("id").toString())));
+			// set button text
+			model.addAttribute("sortbutton", "Ascending Order");
+			model.addAttribute("sortbuttonrevert", "Descending");
 
 		} else {
 			// place transaction table in descending order
 			model.addAttribute("transactions",
 					tr.sortDESCbyUserID(Long.parseLong(session.getAttribute("id").toString())));
+			// set button text
+			model.addAttribute("sortbutton", "Descending Order");
+			model.addAttribute("sortbuttonrevert", "Ascending");
 
 		}
 
